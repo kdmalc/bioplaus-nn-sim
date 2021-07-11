@@ -3,7 +3,7 @@
 ## "Dynamical Patterns of Neural Models in Hodgkin-Huxley Form"
 Embedding Hodgkin-Huxley model understanding into computational frameworks for Brown 2021
 
-Notebook Level Descriptions
+Notebook Level Descriptions <br/>
 0X - Base NBs for demonstrations/learning for various packages used <br/>
 1X - Foundational simulations for single entities (not yet networks) <br/>
 2X - Intro to networks and procedural generation of such networks <br/>
