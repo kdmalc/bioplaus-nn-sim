@@ -240,22 +240,18 @@ def odes_progen(x,t,I,vI):
     p = [1,20,-len(x)]
     roots = np.roots(p)
     numNodes = int(roots[1])
+    print(numNodes)
 
     numSC = numNodes-1 #calc_conx(numNodes)*2 <-- This is the total number of connections, but we only need to pass the max number of connections per node in for each node
     ES = [0] * numSC #ENa #mV #Excitatory Neuron (by this definition)
     
     #Convert list input into a matrix
     numParams = 1+4*maxParams+numSC #In this current form, there are 26 parameters per node.  I.e. 1 node is (1,26)
-    numRows = int(len(x)/numParams) #Could add a check for whether this is actually an int...
-    numCols = numParams
-    x = np.reshape(x,(numRows,numCols))
+    x = np.reshape(x,(numNodes,numParams))
     
     if len(x.shape)==1:
         #Ie if it is 1D, expand the dim to be (1,X) so that we can index as if it were 2D
         x = np.expand_dims(x,0)
-    numNodesPost, numParamsPost = x.shape
-    if not(numNodesPost==numNodes) or not(numParamsPost==numParams):
-        print("Array shape is incorrect")
         
     firstSIndex = numParams-numSC
     
