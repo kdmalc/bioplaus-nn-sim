@@ -213,6 +213,9 @@ def calc_conx(numNodes):
     return conx
 
 
+def save_soln(filename, x):
+    np.save(filename,x)
+
 # In[ ]:
 
 
@@ -240,7 +243,6 @@ def odes_progen(x,t,I,vI):
     p = [1,20,-len(x)]
     roots = np.roots(p)
     numNodes = int(roots[1])
-    print(numNodes)
 
     numSC = numNodes-1 #calc_conx(numNodes)*2 <-- This is the total number of connections, but we only need to pass the max number of connections per node in for each node
     ES = [0] * numSC #ENa #mV #Excitatory Neuron (by this definition)
