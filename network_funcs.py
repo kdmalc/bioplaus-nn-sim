@@ -5,7 +5,7 @@
 
 
 #Source: NB 20
-#Last updated: 7/18
+#Last updated: 7/25: Added try and catch block for dividing by zero error
 #Descr: Functions used for simulating neurons.  As a python module so they can be imported directly
 
 
@@ -140,7 +140,13 @@ def inf_func(V, v0, sigma):
         #Avoid division by 0
         x_inf = 0
     else:
-        x_inf = 1 / (1 + np.exp(-(V-v0)/sigma))
+        try:
+            x_inf = 1 / (1 + np.exp(-(V-v0)/sigma))
+        except RuntimeWarning:
+            print("Stopped:")
+            print(V)
+            print(v0)
+            print(sigma)
     return x_inf 
 
 
