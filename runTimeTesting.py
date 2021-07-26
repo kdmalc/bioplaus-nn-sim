@@ -148,16 +148,14 @@ def inf_func(V, v0, sigma):
         
     print_record = 1
     
-    #CHANGED THIS TO OR!!!
     if v0==0 and sigma==0:
         #This is the case for when we don't use all 5 gating vars
         x_inf = 0
-    elif sigma<np.exp(-5):
-        #This should not run
-        print("ONLY Sigma is equal to zero: avoid division by 0")
-        print(f"v0: {v0}")
-        print("-------------------------------------------------")
-        x_inf = 0
+    elif sigma<(10**-8):
+        if V<v0:
+            x_inf = 0
+        else:
+            x_inf = 1
     else:
         x_inf = 1 / (1 + np.exp(-(V-v0)/sigma))
         denom1 = -(V-v0)/sigma
@@ -244,10 +242,6 @@ def calc_conx(numNodes):
     else:
         conx = (numNodes-1) + calc_conx(numNodes-1)
     return conx
-
-
-def save_soln(filename, x):
-    np.save(filename,x)
 
 # In[ ]:
 
