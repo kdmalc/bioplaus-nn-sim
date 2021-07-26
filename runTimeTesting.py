@@ -5,7 +5,7 @@
 
 
 #Source: NB 20
-#Last updated: 7/25: Added try and catch block for dividing by zero error
+#Last updated: 7/26 to include prints for troubleshooting RunTimeWarnings
 #Descr: Functions used for simulating neurons.  As a python module so they can be imported directly
 
 
@@ -136,11 +136,44 @@ def inf_func(V, v0, sigma):
         sigma: "rate" (technically 1/sigma is the rate) --> big sigma means gradual change (i.e. less steep slope)
     '''
     
+    def my_print(print_record, denom1,denomfull,x_inf):
+        if print_record:
+            print(f"V: {V}")
+            print(f"v0: {v0}")
+            print(f"Sigma: {sigma}")
+            print(f"e exponent: {denom1}")
+            print(f"Full denom: {denomfull}")
+            print(f"x_inf: {x_inf}")
+            print("-------------------------------------------------")
+        
+    print_record = 1
+    
+    #CHANGED THIS TO OR!!!
     if v0==0 and sigma==0:
-        #Avoid division by 0
+        #This is the case for when we don't use all 5 gating vars
+        x_inf = 0
+    elif sigma<np.exp(-5):
+        #This should not run
+        print("ONLY Sigma is equal to zero: avoid division by 0")
+        print(f"v0: {v0}")
+        print("-------------------------------------------------")
         x_inf = 0
     else:
         x_inf = 1 / (1 + np.exp(-(V-v0)/sigma))
+        denom1 = -(V-v0)/sigma
+        denomfull = (1 + np.exp(-(V-v0)/sigma))
+        if denom1<-10 or denom1>100: 
+            print("PROBLEM WITH EXPONENET")
+            my_print(print_record, denom1,denomfull,x_inf)
+            print_record = 0
+        if denomfull<0:
+            print("DENOMINATOR IS NEGATIVE")
+            my_print(print_record, denom1,denomfull,x_inf)
+            print_record = 0
+        if x_inf<0 or x_inf>50:
+            print("X_INF IS OUTSIDE ACCEPTABLE RANGE")
+            my_print(print_record, denom1,denomfull,x_inf)
+            
     return x_inf 
 
 
@@ -211,6 +244,10 @@ def calc_conx(numNodes):
     else:
         conx = (numNodes-1) + calc_conx(numNodes-1)
     return conx
+
+
+def save_soln(filename, x):
+    np.save(filename,x)
 
 # In[ ]:
 
