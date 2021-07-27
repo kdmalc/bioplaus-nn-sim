@@ -206,10 +206,16 @@ def calc_conx(numNodes):
     Rule: The number of connections = the number of connections for a network of 1 node smaller + number of nodes for a network of 1 node smaller than the desired network
     Note further that the point of this is to tell how many values must be passed in for odes_progen for number of SC vars (ie. the number of SC diffEQs that this should solve)
     '''
-    if numNodes==1:
-        conx = 0
-    else:
-        conx = (numNodes-1) + calc_conx(numNodes-1)
+    
+    #Really should just be numNodes * (numNodes-1) * 0.5
+    
+    #if numNodes==1:
+    #    conx = 0
+    #else:
+    #    conx = (numNodes-1) + calc_conx(numNodes-1)
+    #return conx
+    
+    conx = numNodes * (numNodes-1) * 0.5
     return conx
 
 # In[ ]:
