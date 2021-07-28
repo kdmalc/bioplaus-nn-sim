@@ -5,7 +5,7 @@
 
 
 #Source: NB 20
-#Last updated: 7/26 to include prints for troubleshooting RunTimeWarnings
+#Last updated: 7/27 to include prints for troubleshooting RunTimeWarnings
 #Descr: Functions used for simulating neurons.  As a python module so they can be imported directly
 
 
@@ -84,6 +84,7 @@ def plot_vnmh(x,t,numNodes,gatingVars=False):
     leg = plt.legend(loc='upper right')
     for text in leg.get_texts():
         text.set_color('black')
+    plt.ylim(-80,80)
     plt.show()
 
     if gatingVars:
@@ -151,7 +152,7 @@ def inf_func(V, v0, sigma):
     if v0==0 and sigma==0:
         #This is the case for when we don't use all 5 gating vars
         x_inf = 0
-    elif sigma<(10**-8):
+    elif sigma<(10**-3): #########################################################################################
         if V<v0:
             x_inf = 0
         else:
@@ -180,7 +181,7 @@ def diffEQ_func(tau, x_inf, x):
     ie dndt, dmdt, dhdt
     Uses the canonical self linear form, such that dxdt = G(x) * (E(x) - V)
     '''
-    if tau==0:
+    if tau<10**-5: #########################################################################################
         #Avoid division by 0
         dxdt = 0
     else:

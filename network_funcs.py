@@ -314,7 +314,7 @@ def odes_progen(x,t,I,vI):
 
             if SC_repo is not None and len(SC_repo)>0:
                 for idx in range(numNodes):
-                    idx = str(idx + 1) #Adjust for offset, first node is 1 not 0
+                    idx += 1 #Adjust for offset, first node is 1 not 0
                     if SC_repo.get(idx) is not None:
                         adj_idx = int(idx)-1
                         vnode_couplings.append(adj_idx) #This is the node that it is coupled to
